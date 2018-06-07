@@ -41,16 +41,15 @@ public class ReportActivity extends AppCompatActivity implements
      */
     private ReportAdapter mAdapter;
     /**
-     * Tag for the log messages
+     * Tag for test log messages
      */
     public static final String LOG_TAG = ReportActivity.class.getName();
 
     /**
-     * URL for report data from the USGS dataset
+     * URL for report data from the GUARDIAN dataset
      */
-    private static final String USGS_REQUEST_URL ="https://earthquake.usgs" +
-            ".gov/fdsnws/event/1/query?format=geojson&eventtype=earthquake&orderby=time&minmag=4" +
-            "&limit=200";
+    private static final String GUARDIAN_REQUEST_URL = "http://content.guardianapis.com/search?" +
+     "q=politics&api-key=test";
 
     /**
      * Constant value for the report loader ID. We can choose any integer.
@@ -58,21 +57,24 @@ public class ReportActivity extends AppCompatActivity implements
      */
     private static final int REPORT_LOADER_ID = 1;
 
-    /** TextView that is displayed when the list is empty */
+    /**
+     * TextView that is displayed when the list is empty
+     */
     private android.widget.TextView mEmptyStateTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        android.util.Log.i(LOG_TAG, "Test: Report Activity onCreate() called.");
+//      Log for testing purposes
+//      android.util.Log.i(LOG_TAG, "Test: Report Activity onCreate() called.");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report_activity);
 
         // Find a reference to the {@link ListView} in the layout
-        ListView reportListView = (ListView) findViewById(R.id.list);
+        ListView reportListView = findViewById(R.id.list);
 
         // If there is no report data to be displayed, mEmptyStateTextView is called to action
-        mEmptyStateTextView = (android.widget.TextView) findViewById(R.id.empty_view);
+        mEmptyStateTextView = findViewById(R.id.empty_view);
         reportListView.setEmptyView(mEmptyStateTextView);
 
         // Create a new adapter that takes an empty list of reports as input
@@ -85,7 +87,7 @@ public class ReportActivity extends AppCompatActivity implements
         // Set an item click listener on the ListView, which sends an intent to a web browser
         // to open a website with more information about the selected report.
         reportListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
+//            @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Find the current report that was clicked on
                 Report currentReport = mAdapter.getItem(position);
@@ -133,23 +135,25 @@ public class ReportActivity extends AppCompatActivity implements
     // with our specified ID isn't running, so we should create a new one.
     @Override
     public Loader<java.util.List<Report>> onCreateLoader(int i, Bundle bundle) {
-        // Create a new loader for the given URL
-        android.util.Log.i(LOG_TAG, "Test: Report Activity onCreateLoader() called.");
-
-        return new ReportLoader(this, USGS_REQUEST_URL);
+//      Log for testing purposes
+//      android.util.Log.i(LOG_TAG, "Test: Report Activity onCreateLoader() called.");
+    // Create a new loader for the given URL
+        return new ReportLoader(this, GUARDIAN_REQUEST_URL);
     }
 
     // The onLoadFinished() is needed for updating the dataset in the adapter
     @Override
     public void onLoadFinished(Loader<java.util.List<Report>> loader, java.util.List<Report>
             reports) {
-        // Clear the adapter of previous report data
+//      Log for testing purposes
 //      android.util.Log.i(LOG_TAG, "Test: Report Activity onLoadFinished() called.");
+       // Clear the adapter of previous report data
         mAdapter.clear();
 
         // If there is a valid list of {@link Report}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (reports != null && !reports.isEmpty()) {
+//        android.util.Log function for testing purposes
 //        android.util.Log.i(LOG_TAG, "Test: Report Activity onLoadFinished() if empty called.");
 
             // Hide loading indicator because the data has been loaded
@@ -162,11 +166,8 @@ public class ReportActivity extends AppCompatActivity implements
             // Clear the adapter of previous report data
             mAdapter.clear();
 
-            // If there is a valid list of {@link Report}s, then add them to the adapter's
-            // data set. This will trigger the ListView to update.
-//        if (reports != null && !reports.isEmpty()) {
+            // Fill the adapter with new report data
             mAdapter.addAll(reports);
-//            updateUi(reports);
         }
     }
 
@@ -174,8 +175,10 @@ public class ReportActivity extends AppCompatActivity implements
     // the adapters data set needs to be reset
     @Override
     public void onLoaderReset(Loader<java.util.List<Report>> loader) {
-        // Loader reset, so we can clear out our existing data.
+//        android.util.Log function for testing purposes
 //        android.util.Log.i(LOG_TAG, "Test: Report Activity onLoaderReset() called.");
+
+        // Loader reset, so we can clear out existing data.
         mAdapter.clear();
     }
 

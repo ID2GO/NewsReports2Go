@@ -25,7 +25,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * Helper methods related to requesting and receiving report data from USGS.
+ * Helper methods related to requesting and receiving report data from GUARDIAN.
  */
 public final class QueryUtils {
 
@@ -60,13 +60,12 @@ public final class QueryUtils {
         // is formatted, a JSONException exception object will be thrown.
         // Catch the exception so the app doesn't crash, and print the error message to the logs.
         try {
-
             // Create a JSONObject from the SAMPLE_JSON_RESPONSE string
             JSONObject baseJsonResponse = new JSONObject(reportJSON);
-
+            JSONObject responseBase = baseJsonResponse.getJSONObject("response");
             // Extract the JSONArray associated with the key called "features",
             // which represents a list of features (or reports).
-            JSONArray reportArray = baseJsonResponse.getJSONArray("features");
+            JSONArray reportArray = responseBase.getJSONArray("results");
 
             // For looping through each report feature in the reportArray, create an
             // {@link Report} object
@@ -78,23 +77,23 @@ public final class QueryUtils {
                 // For a given report, extract the JSONObject associated with the
                 // key called "properties", which represents a list of all properties
                 // for that report.
-                JSONObject properties = currentReport.getJSONObject("properties");
+//                JSONObject properties = currentReport.getJSONObject("properties");
 
-                // Extract the value for the key called "mag"
-                String articleTitle = properties.getString("mag");
+                // Extract the value for the key called "sectionName"
+                String articleSection = currentReport.getString("sectionName");
 
-                // Extract the value for the key called "place"
-                String sectionTitle = properties.getString("place");
+                // Extract the value for the key called "webPublicationDate"
+                String time = currentReport.getString("webPublicationDate");
 
-                // Extract the value for the key called "time"
-                long time = properties.getLong("time");
+                // Extract the value for the key called "webTitle"
+                String articleTitle = currentReport.getString("webTitle");
 
-                // Extract the value for the key called "url"
-                String url = properties.getString("url");
+                // Extract the value for the key called "webURL"
+                String url = currentReport.getString("webUrl");
 
-                // Create a new {@link Report} object with the articleTitle, sectionTitle, time,
+                // Create a new {@link Report} object with the articleTitle, articleSection, time,
                 // and url from the JSON response.
-                Report report = new Report(articleTitle, sectionTitle, time, url);
+                Report report = new Report(articleTitle, articleSection, time, url);
 
                 // Add the new {@link Report} to the list of reports.
                 reports.add(report);
@@ -117,9 +116,10 @@ public final class QueryUtils {
     // Since this is the only “public” QueryUtils method that the ReportAsyncTask needs to
     // interact with, make all other helper methods in QueryUtils “private”.
     /**
-     * Query the USGS dataset and return a list of {@link Report} objects.
+     * Query the GUARDIAN dataset and return a list of {@link Report} objects.
      */
     public static java.util.List<Report> fetchReportData(String requestUrl) {
+        // Log function for testing purposes
 //     Log.i(LOG_TAG, "Test: QueryUtils fetchReportData() called.");
 
 //  For testing purposes for UI delay sign one can enable/uncomment the Thread.sleep which
@@ -205,10 +205,10 @@ public final class QueryUtils {
         return jsonResponse;
     }
 
-    /**
-     * Convert the {@link InputStream} into a String which contains the
-     * whole JSON response from the server.
-     */
+//    /**
+//     * Convert the {@link InputStream} into a String which contains the
+//     * whole JSON response from the server.
+//     */
     private static String readFromStream(java.io.InputStream inputStream) throws java.io.IOException {
         StringBuilder output = new StringBuilder();
         if (inputStream != null) {

@@ -20,36 +20,44 @@ package eu.id2go.news2go;
  * An {@link Report} object contains information related to a single report.
  */
 public class Report {
+
+//    Declaring global variables of type private: magnitude, sectionTitle & dateOfPublication
+//    Remember, opposed to public global variables, variables of the data type private can only be
+//    accessed by methods within the same class!
+
     /**
-     * Declaring global variables of type private: magnitude, sectionTitle & dateOfPublication
-     * Remember, opposed to public global variables, variables of the data type private can only be
-     * accessed by methods within the same class!
+     * Magnitude of the report
      */
-    /** Magnitude of the report */
     private String mArticleTitle;
 
-    /** SectionTitle of the report */
-    private String mSectionTitle;
+    /**
+     * ArticleSection of the report
+     */
+    private String mArticleSection;
 
-    /** Time of the report */
-    private long mDateOfPublication;
+    /**
+     * Time of the report
+     */
+    private String mDateOfPublication;
 
-    /** Website URL of the report */
+    /**
+     * Website URL of the report
+     */
     private String mUrl;
 
     /**
      * In the Constructor we initialise the variables
      * Constructs a new {@link Report} object.
      *
-     * @param articleTitle is the title of the news report
-     * @param sectionTitle is the section where the report is published
+     * @param articleTitle      is the title of the news report
+     * @param sectionTitle      is the section where the report is published
      * @param dateOfPublication is the time when the news report was published
-     * @param url is the website URL to the site of publication to find more details about the
-     *            report
+     * @param url               is the website URL to the site of publication to find more details about the
+     *                          report
      */
-    public Report(String articleTitle, String sectionTitle, long dateOfPublication, String url) {
+    public Report(String articleTitle, String sectionTitle, String dateOfPublication, String url) {
         mArticleTitle = articleTitle;
-        mSectionTitle = sectionTitle;
+        mArticleSection = sectionTitle;
         mDateOfPublication = dateOfPublication;
         mUrl = url;
     }
@@ -66,14 +74,14 @@ public class Report {
     /**
      * Returns the sectionTitle of the report.
      */
-    public String getSectionTitle() {
-        return mSectionTitle;
+    public String getArticleSection() {
+        return mArticleSection;
     }
 
     /**
      * Returns the time of the report in UNIX-time).
      */
-    public long getDateOfPublication() {
+    public String getDateOfPublication() {
         return mDateOfPublication;
     }
 

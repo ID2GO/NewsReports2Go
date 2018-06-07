@@ -7,29 +7,34 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.util.List;
 
-// Define the ReportLoader class, extend AsyncTaskLoader and specify List as the generic
-// parameter. This explains what type of data is expected to be loaded. In this case, the loader is
-// loading a list of Report objects. Then take a String URL in the constructor, and in
-// loadInBackground(), do the exact same operations as in doInBackground back in
-// ReportAsyncTask. Important: Override the onStartLoading() method to call forceLoad() which is
-// a required step to actually trigger the loadInBackground() method to execute.
+//      Define the ReportLoader class, extend AsyncTaskLoader and specify List as the generic parameter.
+//      This explains what type of data is expected to be loaded. In this case, the loader is
+//      loading a list of Report objects. Then take a String URL in the constructor, and in
+//      loadInBackground(), do the exact same operations as in doInBackground back in ReportAsyncTask.
+//      Important: Override the onStartLoading() method to call forceLoad() which is a required step
+//      to actually trigger the loadInBackground() method to execute.
+
 /**
  * Loads a list of reports by using an AsyncTask to perform the
  * network request to the given URL.
  */
 public class ReportLoader extends AsyncTaskLoader<List<Report>> {
 
-    /** Tag for log messages */
+    /**
+     * Tag for test log messages
+     */
     private static final String LOG_TAG = ReportLoader.class.getName();
 
-    /** Query URL */
+    /**
+     * Query URL
+     */
     private String mUrl;
 
     /**
      * Constructs a new {@link ReportLoader}.
      *
      * @param context of the activity
-     * @param url to load data from
+     * @param url     to load data from
      */
     public ReportLoader(Context context, String url) {
         super(context);
@@ -38,6 +43,7 @@ public class ReportLoader extends AsyncTaskLoader<List<Report>> {
 
     @Override
     protected void onStartLoading() {
+//        Log for testing purposes
 //        android.util.Log.i(LOG_TAG, "Test: Report Loader onStartLoading() called.");
 
         forceLoad();
@@ -48,6 +54,7 @@ public class ReportLoader extends AsyncTaskLoader<List<Report>> {
      */
     @Override
     public List<Report> loadInBackground() {
+//        Log for testing purposes
 //        android.util.Log.i(LOG_TAG, "Test: Report Loader loadInBackground() called.");
 
         if (mUrl == null) {

@@ -33,17 +33,11 @@ import java.util.List;
 /**
  * An {@link ReportAdapter} knows how to create a list item layout for each report
  * in the data source (a list of {@link Report} objects).
- *
+ * <p>
  * These list item layouts will be provided to an adapter view like ListView
  * to be displayed to the user.
  */
 public class ReportAdapter extends ArrayAdapter<Report> {
-
-    /**
-     * The part of the sectionTitle string from the USGS service that we use to determine
-     * whether or not there is a sectionTitle offset present ("5km N of Cairo, Egypt").
-     */
-    private static final String LOCATION_SEPARATOR = " of ";
 
     /**
      * Constructs a new {@link ReportAdapter}.
@@ -61,9 +55,10 @@ public class ReportAdapter extends ArrayAdapter<Report> {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Check if there is an existing list item view (called convertView) that we can reuse,
+        // Check if there is an existing list item view (called convertView) that can be reused,
         // otherwise, if convertView is null, then inflate a new list item layout.
         View listItemView = convertView;
+
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.report_list_item, parent, false);
@@ -71,72 +66,36 @@ public class ReportAdapter extends ArrayAdapter<Report> {
 
         // Find the report at the given position in the list of reports
         Report currentReport = getItem(position);
-        /**
-         * Binding the data of the report object to the views in the list_item layout based
-         * on the view_id
-         */
+
+
+        // Bind the data of the report object to the views in the list_item layout based
+        // on the view_id's
+
         // Find the TextView with view ID article
-        TextView articleView = (TextView) listItemView.findViewById(R.id.article);
+        TextView articleView = listItemView.findViewById(R.id.article);
         // Format the articleTitle to show 1 decimal place
         articleView.setText(currentReport.getArticleTitle());
 
+        // Find the TextView with view ID section
+        TextView sectionView = listItemView.findViewById(R.id.section);
+        // Format the articleTitle to show 1 decimal place
+        sectionView.setText(currentReport.getArticleSection());
 
-        // Get the original sectionTitle string from the Report object,
-        // which can be in the format of "5km N of Cairo, Egypt" or "Pacific-Antarctic Ridge".
-        String originalSectionTitle = currentReport.getSectionTitle();
+        // Create a new dateTime object from the time in regular time & date format in the
+        // JSONreport
 
-        // If the original sectionTitle string (i.e. "5km N of Cairo, Egypt") contains
-        // a primary sectionTitle (Cairo, Egypt) and a sectionTitle offset (5km N of that city)
-        // then store the primary sectionTitle separately from the sectionTitle offset in 2 Strings,
-        // so they can be displayed in 2 TextViews.
-        String primarySectionTitle;
-        String sectionTitleOffset;
-
-        // Check whether the originalSectionTitle string contains the " of " text
-        if (originalSectionTitle.contains(LOCATION_SEPARATOR)) {
-            // Split the string into different parts (as an array of Strings)
-            // based on the " of " text. We expect an array of 2 Strings, where
-            // the first String will be "5km N" and the second String will be "Cairo, Egypt".
-            String[] parts = originalSectionTitle.split(LOCATION_SEPARATOR);
-            // SectionTitle offset should be "5km N " + " of " --> "5km N of"
-            sectionTitleOffset = parts[0] + LOCATION_SEPARATOR;
-            // Primary sectionTitle should be "Cairo, Egypt"
-            primarySectionTitle = parts[1];
-        } else {
-            // Otherwise, there is no " of " text in the originalSectionTitle string.
-            // Hence, set the default sectionTitle offset to say "Near the".
-            sectionTitleOffset = getContext().getString(R.string.near_the);
-            // The primary sectionTitle will be the full sectionTitle string "Pacific-Antarctic Ridge".
-            primarySectionTitle = originalSectionTitle;
-        }
-
-        // Find the TextView with view ID sectionTitle
-        TextView primarySectionTitleView = (TextView) listItemView.findViewById(R.id.primary_location);
-        // Display the sectionTitle of the current report in that TextView
-        primarySectionTitleView.setText(primarySectionTitle);
-
-        // Find the TextView with view ID sectionTitle offset
-        TextView sectionTitleOffsetView = (TextView) listItemView.findViewById(R.id
-                .location_offset);
-        // Display the sectionTitle offset of the current report in that TextView
-        sectionTitleOffsetView.setText(sectionTitleOffset);
-
-        // Create a new Date object from the time in milliseconds of the report
-        Date dateObject = new Date(currentReport.getDateOfPublication());
+        String dateTime = currentReport.getDateOfPublication();
+        String[] dateAndTime = formatDateAndTime(dateTime);
 
         // Find the TextView with view ID date
-        TextView dateView = (TextView) listItemView.findViewById(R.id.date);
-        // Format the date string (i.e. "Mar 3, 1984")
-        String formattedDate = formatDate(dateObject);
-        // Display the date of the current report in that TextView
-        dateView.setText(formattedDate);
+        TextView dateView = listItemView.findViewById(R.id.date);
+        // Set Array entry to position 0
+        dateView.setText(dateAndTime[0]);
 
         // Find the TextView with view ID time
-        TextView timeView = (TextView) listItemView.findViewById(R.id.time);
-        // Format the time string (i.e. "4:30PM")
-        String formattedTime = formatTime(dateObject);
-        // Display the time of the current report in that TextView
-        timeView.setText(formattedTime);
+        TextView timeView = listItemView.findViewById(R.id.time);
+        // Set Array entry to position 1
+        timeView.setText(dateAndTime[1]);
 
         // Return the list item view that is now showing the appropriate data
         return listItemView;
@@ -146,16 +105,11 @@ public class ReportAdapter extends ArrayAdapter<Report> {
     /**
      * Return the formatted date string (i.e. "Mar 3, 1984") from a Date object.
      */
-    private String formatDate(Date dateObject) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("LLL, dd, yyyy");
-        return dateFormat.format(dateObject);
+    private String[] formatDateAndTime(String dateTime) {
+        String[] dateAndTimeSplit = dateTime.replace("T", " ").replace("Z", " ").trim().split
+                (" ");
+
+        return dateAndTimeSplit;
     }
 
-    /**
-     * Return the formatted date string (i.e. "4:30 PM") from a Date object.
-     */
-    private String formatTime(Date dateObject) {
-        SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm:ss a");
-        return timeFormat.format(dateObject);
-    }
 }
