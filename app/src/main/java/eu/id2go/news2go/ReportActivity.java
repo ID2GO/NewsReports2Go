@@ -15,18 +15,24 @@
  */
 package eu.id2go.news2go;
 
+import android.app.LoaderManager;
+import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Intent;
+import android.content.Loader;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.app.LoaderManager;
-import android.app.LoaderManager.LoaderCallbacks;
-import android.content.Loader;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ReportActivity extends AppCompatActivity implements
         LoaderCallbacks<java.util.List<Report>> {
@@ -49,7 +55,7 @@ public class ReportActivity extends AppCompatActivity implements
      * URL for report data from the GUARDIAN dataset
      */
     private static final String GUARDIAN_REQUEST_URL = "http://content.guardianapis.com/search?" +
-     "q=politics&api-key=test";
+            "q=politics&api-key=test";
 
     /**
      * Constant value for the report loader ID. We can choose any integer.
@@ -58,9 +64,18 @@ public class ReportActivity extends AppCompatActivity implements
     private static final int REPORT_LOADER_ID = 1;
 
     /**
+     * @BindView ButterKnife library is a view injection library that injects views into android
+     * activity / fragments using annotations.  For example, @BindView annotation avoids using
+     * findViewById() method by automatically type casting the view element.
      * TextView that is displayed when the list is empty
      */
-    private android.widget.TextView mEmptyStateTextView;
+    @BindView(R.id.list)
+    public ListView reportListView;
+
+    @BindView(R.id.empty_view)
+    public android.widget.TextView mEmptyStateTextView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +85,10 @@ public class ReportActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report_activity);
 
-        // Find a reference to the {@link ListView} in the layout
-        ListView reportListView = findViewById(R.id.list);
+        //in order for the ButterKnife annotations to work
+        ButterKnife.bind(this);
 
         // If there is no report data to be displayed, mEmptyStateTextView is called to action
-        mEmptyStateTextView = findViewById(R.id.empty_view);
         reportListView.setEmptyView(mEmptyStateTextView);
 
         // Create a new adapter that takes an empty list of reports as input
@@ -87,7 +101,7 @@ public class ReportActivity extends AppCompatActivity implements
         // Set an item click listener on the ListView, which sends an intent to a web browser
         // to open a website with more information about the selected report.
         reportListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
+            //            @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Find the current report that was clicked on
                 Report currentReport = mAdapter.getItem(position);
@@ -98,6 +112,15 @@ public class ReportActivity extends AppCompatActivity implements
                 // Create a new intent to view the report URI
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW, reportUri);
 
+                //  Verify the websiteIntent will resolve and the app will not crash by lack of a browser
+                PackageManager packageManager = getPackageManager();
+                List<ResolveInfo> activities = packageManager.queryIntentActivities(websiteIntent, 0);
+                boolean isIntentSafe = activities.size() > 0;
+
+                // Start an activity if it´s safe
+                if (isIntentSafe) {
+                    startActivity(websiteIntent);
+                }
                 // Send the intent to launch a new activity
                 startActivity(websiteIntent);
             }
@@ -137,7 +160,7 @@ public class ReportActivity extends AppCompatActivity implements
     public Loader<java.util.List<Report>> onCreateLoader(int i, Bundle bundle) {
 //      Log for testing purposes
 //      android.util.Log.i(LOG_TAG, "Test: Report Activity onCreateLoader() called.");
-    // Create a new loader for the given URL
+        // Create a new loader for the given URL
         return new ReportLoader(this, GUARDIAN_REQUEST_URL);
     }
 
@@ -147,7 +170,7 @@ public class ReportActivity extends AppCompatActivity implements
             reports) {
 //      Log for testing purposes
 //      android.util.Log.i(LOG_TAG, "Test: Report Activity onLoadFinished() called.");
-       // Clear the adapter of previous report data
+        // Clear the adapter of previous report data
         mAdapter.clear();
 
         // If there is a valid list of {@link Report}s, then add them to the adapter's
