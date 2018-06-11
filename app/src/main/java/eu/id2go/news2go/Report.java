@@ -26,6 +26,12 @@ public class Report {
 //    accessed by methods within the same class!
 
     /**
+     * FirstName & LastName of the reporter
+     */
+    private String mFirstName;
+    private String mLastName;
+
+    /**
      * Magnitude of the report
      */
     private String mArticleTitle;
@@ -49,13 +55,17 @@ public class Report {
      * In the Constructor we initialise the variables
      * Constructs a new {@link Report} object.
      *
+     * @param firstName        is the name of the news reporter
+     * @param lastName        is the name of the news reporter
      * @param articleTitle      is the title of the news report
      * @param sectionTitle      is the section where the report is published
      * @param dateOfPublication is the time when the news report was published
      * @param url               is the website URL to the site of publication to find more details about the
      *                          report
      */
-    public Report(String articleTitle, String sectionTitle, String dateOfPublication, String url) {
+    public Report(String firstName, String lastName, String articleTitle, String sectionTitle, String dateOfPublication, String url) {
+        mFirstName = firstName;
+        mLastName = lastName;
         mArticleTitle = articleTitle;
         mArticleSection = sectionTitle;
         mDateOfPublication = dateOfPublication;
@@ -67,6 +77,15 @@ public class Report {
      * by other Classes Returns the magnitude, sectionTitle & time of the report and the url of
      * the site where the info is recorded.
      */
+    public String getFirstName() {
+        return mFirstName;
+    }
+
+    public String getLastName() {
+        return mLastName;
+    }
+
+
     public String getArticleTitle() {
         return mArticleTitle;
     }

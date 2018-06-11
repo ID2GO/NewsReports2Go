@@ -16,18 +16,12 @@
 package eu.id2go.news2go;
 
 import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
-import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -71,14 +65,34 @@ public class ReportAdapter extends ArrayAdapter<Report> {
         // Bind the data of the report object to the views in the list_item layout based
         // on the view_id's
 
+        // Find the TextView with view ID author
+        TextView firstNameView = listItemView.findViewById(R.id.first_name);
+        // Format the authorName to display
+        if (currentReport.getFirstName().isEmpty()) {
+            firstNameView.setVisibility(View.GONE);
+        } else {
+            firstNameView.setText(currentReport.getFirstName());
+            firstNameView.setVisibility(View.VISIBLE);
+        }
+
+        // Find the TextView with view ID author
+        TextView lastNameView = listItemView.findViewById(R.id.last_name);
+        // Format the authorName to display
+        if (currentReport.getLastName().isEmpty()) {
+            lastNameView.setVisibility(View.GONE);
+        } else {
+            lastNameView.setText(currentReport.getLastName());
+            lastNameView.setVisibility(View.VISIBLE);
+        }
+
         // Find the TextView with view ID article
         TextView articleView = listItemView.findViewById(R.id.article);
-        // Format the articleTitle to show 1 decimal place
+        // Format the articleTitle to display
         articleView.setText(currentReport.getArticleTitle());
 
         // Find the TextView with view ID section
         TextView sectionView = listItemView.findViewById(R.id.section);
-        // Format the articleTitle to show 1 decimal place
+        // Format the articleTitle to display
         sectionView.setText(currentReport.getArticleSection());
 
         // Create a new dateTime object from the time in regular time & date format in the

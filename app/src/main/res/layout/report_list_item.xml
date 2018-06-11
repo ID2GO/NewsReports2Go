@@ -18,11 +18,40 @@
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:baselineAligned="false"
     android:orientation="horizontal"
-    android:paddingEnd="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingStart="16dp">
+    android:paddingEnd="@dimen/padding_16dp"
+    android:paddingRight="@dimen/padding_16dp">
 
+    <LinearLayout
+        android:layout_width="50dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/first_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="start"
+            android:maxLines="1"
+            android:textColor="@color/textColorReportDetails"
+            android:textSize="14sp"
+            tools:text="@string/first_name_writer" />
+
+        <TextView
+            android:id="@+id/last_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="start"
+            android:maxLines="1"
+            android:textColor="@color/textColorReportDetails"
+            android:textSize="14sp"
+            tools:text="@string/last_name_writer" />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -41,7 +70,7 @@
             android:textAllCaps="true"
             android:textColor="@color/textColorReportDetails"
             android:textSize="12sp"
-            tools:text="Section of the newspaper" />
+            tools:text="@string/section_title" />
 
         <TextView
             android:id="@+id/article"
@@ -51,7 +80,7 @@
             android:maxLines="2"
             android:textColor="@color/textColorReportArticle"
             android:textSize="16sp"
-            tools:text="Title of the article" />
+            tools:text="@string/article_title" />
 
     </LinearLayout>
 
@@ -69,7 +98,7 @@
             android:layout_gravity="end"
             android:textColor="@color/textColorReportDetails"
             android:textSize="12sp"
-            tools:text="Mar 6, 2010" />
+            tools:text="@string/date" />
 
         <TextView
             android:id="@+id/time"
@@ -78,7 +107,7 @@
             android:layout_gravity="end"
             android:textColor="@color/textColorReportDetails"
             android:textSize="12sp"
-            tools:text="3:00 PM" />
+            tools:text="@string/time" />
 
     </LinearLayout>
 </LinearLayout>

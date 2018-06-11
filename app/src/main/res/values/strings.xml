@@ -18,9 +18,15 @@
     <!-- Default text to show with the earthquake location ("Near the Pacific-Antarctic Ridge")
       if no specific kilometer distance from the primary location is given [CHAR LIMIT=30] -->
     <string name="near_the">Near the</string>
-    <string name="title_activity_report_loader">EarthquakeLoader</string>
+    <string name="title_activity_report_loader">ReportLoader</string>
     <!-- Text to display in the list when there are no earthquakes [CHAR LIMIT=NONE] -->
-    <string name="no_reports">No reports found.</string>
+    <string name="no_reports">Currently there are no reports found, check later for new stories.</string>
     <!-- Error message when there is no internet connectivity [CHAR LIMIT=NONE] -->
-    <string name="no_internet_connection">No internet connection.</string>
+    <string name="no_internet_connection">You have no internet connection, please check your Wifi and/or Data settings and relaunch News2Go</string>
+    <string name="first_name_writer">author</string>
+    <string name="last_name_writer">writer</string>
+    <string name="section_title">Section of the newspaper</string>
+    <string name="article_title">Title of the article</string>
+    <string name="date">Mar 6, 2010</string>
+    <string name="time">3:00 PM</string>
 </resources>

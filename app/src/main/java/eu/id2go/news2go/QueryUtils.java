@@ -44,6 +44,7 @@ public final class QueryUtils {
     // extractFeatureFromJson() and to take a JSON response String as input. Instead of hardcoding
     // the extractFeatureFromJson() method to only be able to parse the hardcoded SAMPLE_JSON_RESPONSE
     // String, this method becomes more reusable in different contexts if we accept a String input.
+
     /**
      * Return a list of {@link Report} objects that has been built up from
      * parsing a JSON response.
@@ -74,10 +75,22 @@ public final class QueryUtils {
                 // Get a single report at position i within the list of reports
                 JSONObject currentReport = reportArray.getJSONObject(i);
 
-                // For a given report, extract the JSONObject associated with the
-                // key called "properties", which represents a list of all properties
-                // for that report.
-//                JSONObject properties = currentReport.getJSONObject("properties");
+                String firstName, lastName;
+
+                if (currentReport.getJSONArray("tags") != null && currentReport.getJSONArray("tags").length() != 0) {
+
+                    // For a given report, extract the JSONObject associated with the
+                    // key called "properties", which represents a list of all properties
+                    // for that report.
+                    // JSONObject properties = currentReport.getJSONObject("firstName");
+
+                    firstName = currentReport.getJSONArray("tags").getJSONObject(0).optString("firstName");
+                    // JSONObject properties = currentReport.getJSONObject("lastName");
+                    lastName = currentReport.getJSONArray("tags").getJSONObject(0).optString("lastName");
+                } else {
+                    firstName = "";
+                    lastName = "";
+                }
 
                 // Extract the value for the key called "sectionName"
                 String articleSection = currentReport.getString("sectionName");
@@ -93,7 +106,7 @@ public final class QueryUtils {
 
                 // Create a new {@link Report} object with the articleTitle, articleSection, time,
                 // and url from the JSON response.
-                Report report = new Report(articleTitle, articleSection, time, url);
+                Report report = new Report(firstName, lastName, articleTitle, articleSection, time, url);
 
                 // Add the new {@link Report} to the list of reports.
                 reports.add(report);
@@ -110,25 +123,19 @@ public final class QueryUtils {
         return reports;
     }
 
-
-    // Add in the fetchReportData() helper method that ties all the steps together -
-    // creating a java.net.URL, sending the request, processing the response.
-    // Since this is the only “public” QueryUtils method that the ReportAsyncTask needs to
-    // interact with, make all other helper methods in QueryUtils “private”.
     /**
-     * Query the GUARDIAN dataset and return a list of {@link Report} objects.
+     *   Add in the fetchReportData() helper method that ties all the steps together
+     *   creating a java.net.URL, sending the request, processing the response.
+     *   Since this is the only “public” QueryUtils method that the ReportAsyncTask needs to
+     *   interact with, make all other helper methods in QueryUtils “private”.
+     *
+     *   Query the GUARDIAN data set and return a list of {@link Report} objects.
      */
     public static java.util.List<Report> fetchReportData(String requestUrl) {
-        // Log function for testing purposes
-//     Log.i(LOG_TAG, "Test: QueryUtils fetchReportData() called.");
+        //     Log function for testing purposes
+        //     Log.i(LOG_TAG, "Test: QueryUtils fetchReportData() called.");
 
-//  For testing purposes for UI delay sign one can enable/uncomment the Thread.sleep which
-//  will delay the data connection by 2 seconds
-//  try {
-//         Thread.sleep(2000);
-//      } catch (InterruptedException e) {
-//         e.printStackTrace();
-//      }
+
         // Create URL object
         java.net.URL url = createUrl(requestUrl);
 
@@ -205,10 +212,10 @@ public final class QueryUtils {
         return jsonResponse;
     }
 
-//    /**
-//     * Convert the {@link InputStream} into a String which contains the
-//     * whole JSON response from the server.
-//     */
+    /**
+     * Convert the {@link java.io.InputStream} into a String which contains the
+     * whole JSON response from the server.
+     */
     private static String readFromStream(java.io.InputStream inputStream) throws java.io.IOException {
         StringBuilder output = new StringBuilder();
         if (inputStream != null) {

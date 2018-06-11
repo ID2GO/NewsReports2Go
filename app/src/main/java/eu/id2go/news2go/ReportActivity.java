@@ -54,8 +54,9 @@ public class ReportActivity extends AppCompatActivity implements
     /**
      * URL for report data from the GUARDIAN dataset
      */
-    private static final String GUARDIAN_REQUEST_URL = "http://content.guardianapis.com/search?" +
-            "q=politics&api-key=test";
+    private static final String GUARDIAN_REQUEST_URL =
+            "http://content.guardianapis.com/search?order-by=newest&show-tags=contributor&page-size=15&q=politics&api-key=test";
+
 
     /**
      * Constant value for the report loader ID. We can choose any integer.
@@ -79,8 +80,8 @@ public class ReportActivity extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//      Log for testing purposes
-//      android.util.Log.i(LOG_TAG, "Test: Report Activity onCreate() called.");
+        //      Log for testing purposes
+        //      android.util.Log.i(LOG_TAG, "Test: Report Activity onCreate() called.");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report_activity);
@@ -158,8 +159,8 @@ public class ReportActivity extends AppCompatActivity implements
     // with our specified ID isn't running, so we should create a new one.
     @Override
     public Loader<java.util.List<Report>> onCreateLoader(int i, Bundle bundle) {
-//      Log for testing purposes
-//      android.util.Log.i(LOG_TAG, "Test: Report Activity onCreateLoader() called.");
+        //      Log for testing purposes
+        //      android.util.Log.i(LOG_TAG, "Test: Report Activity onCreateLoader() called.");
         // Create a new loader for the given URL
         return new ReportLoader(this, GUARDIAN_REQUEST_URL);
     }
@@ -168,16 +169,16 @@ public class ReportActivity extends AppCompatActivity implements
     @Override
     public void onLoadFinished(Loader<java.util.List<Report>> loader, java.util.List<Report>
             reports) {
-//      Log for testing purposes
-//      android.util.Log.i(LOG_TAG, "Test: Report Activity onLoadFinished() called.");
+        //      Log for testing purposes
+        //      android.util.Log.i(LOG_TAG, "Test: Report Activity onLoadFinished() called.");
         // Clear the adapter of previous report data
         mAdapter.clear();
 
         // If there is a valid list of {@link Report}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
         if (reports != null && !reports.isEmpty()) {
-//        android.util.Log function for testing purposes
-//        android.util.Log.i(LOG_TAG, "Test: Report Activity onLoadFinished() if empty called.");
+            //        android.util.Log function for testing purposes
+            //        android.util.Log.i(LOG_TAG, "Test: Report Activity onLoadFinished() if empty called.");
 
             // Hide loading indicator because the data has been loaded
             View loadingIndicator = findViewById(R.id.loading_indicator);
@@ -198,8 +199,8 @@ public class ReportActivity extends AppCompatActivity implements
     // the adapters data set needs to be reset
     @Override
     public void onLoaderReset(Loader<java.util.List<Report>> loader) {
-//        android.util.Log function for testing purposes
-//        android.util.Log.i(LOG_TAG, "Test: Report Activity onLoaderReset() called.");
+        //        android.util.Log function for testing purposes
+        //        android.util.Log.i(LOG_TAG, "Test: Report Activity onLoaderReset() called.");
 
         // Loader reset, so we can clear out existing data.
         mAdapter.clear();
