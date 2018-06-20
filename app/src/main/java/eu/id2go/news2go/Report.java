@@ -63,6 +63,7 @@ public class Report {
      * @param url               is the website URL to the site of publication to find more details about the
      *                          report
      */
+//      public Report(String articleTitle, String sectionTitle, String dateOfPublication, String url) {
     public Report(String firstName, String lastName, String articleTitle, String sectionTitle, String dateOfPublication, String url) {
         mFirstName = firstName;
         mLastName = lastName;

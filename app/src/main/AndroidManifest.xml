@@ -35,12 +35,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name=".ReportAdapter" />-->
+        <!-- <activity android:name=".ReportAdapter" /> -->
         <activity
             android:name=".ReportLoader"
             android:label="@string/title_activity_report_loader"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/settings_title"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="eu.id2go.news2go.ReportActivity" />
+        </activity>
     </application>
 
 </manifest>

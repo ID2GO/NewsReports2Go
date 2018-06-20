@@ -107,6 +107,7 @@ public final class QueryUtils {
                 // Create a new {@link Report} object with the articleTitle, articleSection, time,
                 // and url from the JSON response.
                 Report report = new Report(firstName, lastName, articleTitle, articleSection, time, url);
+//                Report report = new Report(articleTitle, articleSection, time, url);
 
                 // Add the new {@link Report} to the list of reports.
                 reports.add(report);

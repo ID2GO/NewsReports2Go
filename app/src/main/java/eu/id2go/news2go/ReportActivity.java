@@ -54,8 +54,16 @@ public class ReportActivity extends AppCompatActivity implements
     /**
      * URL for report data from the GUARDIAN dataset
      */
-    private static final String GUARDIAN_REQUEST_URL =
-            "http://content.guardianapis.com/search?order-by=newest&show-tags=contributor&page-size=15&q=politics&api-key=test";
+    // Tags based api: q = finance, france, love, fairytails, books, films, music, science_fiction,
+    // non_fiction, romance, countries, etc.& order-by parameter should be 'newest' (default), 'oldest' or 'relevance'
+    // https://content.guardianapis.com/tags?q=finance&api-key=test
+    // Reference based api:q = author, contributor, books
+    // Sections based api : opinion, news, politics, culture, science, lifeandstyle,
+    // https://content.guardianapis.com/sections?q=culture&api-key=test
+
+    private static final String GUARDIAN_REQUEST_URL = "http://content.guardianapis.com/search?";
+//            "https://content.guardianapis.com/search?order-by=newest&show-tags=contributor&page-size=15&q=politics&api-key=test";
+//            "https://content.guardianapis.com/search?order-by=newest&show-reference=contributor&page-size=15&q=politics&api-key=test";
 
 
     /**
@@ -161,8 +169,37 @@ public class ReportActivity extends AppCompatActivity implements
     public Loader<java.util.List<Report>> onCreateLoader(int i, Bundle bundle) {
         //      Log for testing purposes
         //      android.util.Log.i(LOG_TAG, "Test: Report Activity onCreateLoader() called.");
+        android.content.SharedPreferences sharedPrefs = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
+
+        // getString retrieves a String value from the preferences. The second param is the default
+        // value for this preference.
+        String searchTags = sharedPrefs.getString(
+                getString(R.string.settings_tags_key),
+                getString(R.string.settings_tags_default));
+
+        String orderBy = sharedPrefs.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default)
+        );
+
+        // parse breaks apart the URI string that's passed into its params.
+        Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
+        // buildUpon prepares the baseUri that we just parsed so we can add query params tot it.
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        // Append query params & value, Exemple: the format=json
+
+        uriBuilder.appendQueryParameter("order-by", orderBy);
+        uriBuilder.appendQueryParameter("q", "\"" + searchTags + "\"");
+        uriBuilder.appendQueryParameter("show-references", "author");
+        uriBuilder.appendQueryParameter("show-tags", "contributor");
+        uriBuilder.appendQueryParameter("page-size", "20");
+        uriBuilder.appendQueryParameter("api-key", "7e4455a6-290a-4b45-bd8d-05345b2027ed");
+
+
+
         // Create a new loader for the given URL
-        return new ReportLoader(this, GUARDIAN_REQUEST_URL);
+        return new ReportLoader(this, uriBuilder.toString());
     }
 
     // The onLoadFinished() is needed for updating the dataset in the adapter
@@ -206,4 +243,20 @@ public class ReportActivity extends AppCompatActivity implements
         mAdapter.clear();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -23,8 +23,40 @@
     <string name="no_reports">Currently there are no reports found, check later for new stories.</string>
     <!-- Error message when there is no internet connectivity [CHAR LIMIT=NONE] -->
     <string name="no_internet_connection">You have no internet connection, please check your Wifi and/or Data settings and relaunch News2Go</string>
-    <string name="first_name_writer">author</string>
-    <string name="last_name_writer">writer</string>
+
+    <!-- Settings Menu Item [CHAR LIMIT=NONE] -->
+    <string name="settings_menu_item">Settings</string>
+
+    <!-- Settings Activity Title [CHAR LIMIT=NONE] -->
+    <string name="settings_title">Report Settings</string>
+
+    <!--Fragment Options-->
+
+    <!--Stings for Order-By Fragment Checkbox-Picker Preferences [CHAR LIMIT=30]-->
+    <string name="settings_order_by_label">Order By</string>
+    <string name="settings_order_by_key" translatable="false">order_by</string>
+    <string name="settings_order_by_default" translatable="false">@string/settings_order_by_relevance_value</string>
+
+    <!--Label for fragment checkbox order-by default option [CHAR LIMIT=20]-->
+    <string name="settings_order_by_relevance_label">Relevance</string>
+    <string name="settings_order_by_relevance_value" translatable="false">relevance</string>
+
+    <!--Label for fragment Checkbox order-by most recent option [CHAR LIMIT=20]-->
+    <string name="settings_order_by_newest_label">Newest</string>
+    <string name="settings_order_by_newest_value" translatable="false">newest</string>
+
+    <!--Label for fragment Checkbox order-by oldest option [CHAR LIMIT=20]-->
+    <string name="settings_order_by_oldest_label">Oldest</string>
+    <string name="settings_order_by_oldest_value" translatable="false">oldest</string>
+
+    <!-- Strings For Minimum Magnitude Fragment EditText Preference [CHAR LIMIT=30] -->
+    <string name="settings_tags_label">Search Article Tags</string>
+    <string name="settings_tags_key" translatable="false">tags_key</string>
+    <string name="settings_tags_default" translatable="false">economy</string>
+
+    <!--Dummy TextView fillers in case there is nothing to show ia a report-->
+    <!--<string name="first_name_writer">author</string>-->
+    <!--<string name="last_name_writer">writer</string>-->
     <string name="section_title">Section of the newspaper</string>
     <string name="article_title">Title of the article</string>
     <string name="date">Mar 6, 2010</string>

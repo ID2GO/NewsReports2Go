@@ -88,12 +88,22 @@ public class ReportAdapter extends ArrayAdapter<Report> {
         // Find the TextView with view ID article
         TextView articleView = listItemView.findViewById(R.id.article);
         // Format the articleTitle to display
-        articleView.setText(currentReport.getArticleTitle());
+        if (currentReport.getArticleTitle().isEmpty()) {
+            articleView.setVisibility(View.GONE);
+        } else {
+            articleView.setText(currentReport.getArticleTitle());
+            articleView.setVisibility(View.VISIBLE);
+        }
 
         // Find the TextView with view ID section
         TextView sectionView = listItemView.findViewById(R.id.section);
         // Format the articleTitle to display
-        sectionView.setText(currentReport.getArticleSection());
+        if (currentReport.getArticleSection().isEmpty()) {
+            sectionView.setVisibility(View.GONE);
+        } else {
+            sectionView.setText(currentReport.getArticleSection());
+            sectionView.setVisibility(View.VISIBLE);
+        }
 
         // Create a new dateTime object from the time in regular time & date format in the
         // JSONreport
