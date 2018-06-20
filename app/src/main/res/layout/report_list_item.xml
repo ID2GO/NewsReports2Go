@@ -12,102 +12,108 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 --><!-- Layout for a single list item that displays an earthquake -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
-    android:baselineAligned="false"
-    android:orientation="horizontal"
-    android:paddingEnd="@dimen/padding_16dp"
-    android:paddingRight="@dimen/padding_16dp">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="50dp"
-        android:layout_height="36dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="16dp"
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/first_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="start"
-            android:maxLines="1"
-            android:textColor="@color/textColorReportDetails"
-            android:textSize="14sp"
-            tools:text="@string/first_name_writer" />
-
-        <TextView
-            android:id="@+id/last_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="start"
-            android:maxLines="1"
-            android:textColor="@color/textColorReportDetails"
-            android:textSize="14sp"
-            tools:text="@string/last_name_writer" />
-    </LinearLayout>
-    <LinearLayout
+    <TextView
+        android:id="@+id/section"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
         android:layout_marginStart="16dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_marginTop="16dp"
+        android:background="@color/colorPrimary"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:textAllCaps="false"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/section_title" />
 
-        <TextView
-            android:id="@+id/section"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-medium"
-            android:maxLines="1"
-            android:textAllCaps="true"
-            android:textColor="@color/textColorReportDetails"
-            android:textSize="12sp"
-            tools:text="@string/section_title" />
-
-        <TextView
-            android:id="@+id/article"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:textColor="@color/textColorReportArticle"
-            android:textSize="16sp"
-            tools:text="@string/article_title" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/article"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:orientation="vertical">
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/textColorReportArticle"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/section"
+        tools:text="@string/article_title" />
 
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:textColor="@color/textColorReportDetails"
-            android:textSize="12sp"
-            tools:text="@string/date" />
+    <TextView
+        android:id="@+id/first_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:maxLines="1"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/article"
+        tools:text="@string/first_name_writer" />
 
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:textColor="@color/textColorReportDetails"
-            android:textSize="12sp"
-            tools:text="@string/time" />
+    <TextView
+        android:id="@+id/last_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:maxLines="1"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/first_name"
+        app:layout_constraintTop_toBottomOf="@+id/article"
+        tools:text="@string/last_name_writer" />
 
-    </LinearLayout>
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/magnitude1"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/time"
+        app:layout_constraintTop_toBottomOf="@+id/article"
+        tools:text="@string/date" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/magnitude1"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/article"
+        tools:text="@string/time" />
+
+</android.support.constraint.ConstraintLayout>

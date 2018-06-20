@@ -51,19 +51,17 @@ public class ReportActivity extends AppCompatActivity implements
      */
     public static final String LOG_TAG = ReportActivity.class.getName();
 
-    /**
-     * URL for report data from the GUARDIAN dataset
-     */
     // Tags based api: q = finance, france, love, fairytails, books, films, music, science_fiction,
     // non_fiction, romance, countries, etc.& order-by parameter should be 'newest' (default), 'oldest' or 'relevance'
     // https://content.guardianapis.com/tags?q=finance&api-key=test
     // Reference based api:q = author, contributor, books
     // Sections based api : opinion, news, politics, culture, science, lifeandstyle,
     // https://content.guardianapis.com/sections?q=culture&api-key=test
-
+    // api-key=test, test must be replaced by a free developer key!
+    /**
+     * URL for report data from the GUARDIAN dataset
+     */
     private static final String GUARDIAN_REQUEST_URL = "http://content.guardianapis.com/search?";
-//            "https://content.guardianapis.com/search?order-by=newest&show-tags=contributor&page-size=15&q=politics&api-key=test";
-//            "https://content.guardianapis.com/search?order-by=newest&show-reference=contributor&page-size=15&q=politics&api-key=test";
 
 
     /**
@@ -110,7 +108,7 @@ public class ReportActivity extends AppCompatActivity implements
         // Set an item click listener on the ListView, which sends an intent to a web browser
         // to open a website with more information about the selected report.
         reportListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            //            @Override
+
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Find the current report that was clicked on
                 Report currentReport = mAdapter.getItem(position);
@@ -163,8 +161,7 @@ public class ReportActivity extends AppCompatActivity implements
 
     }
 
-    // The onCreateLoader() is needed for when the LoaderManager has determined that the loader
-    // with our specified ID isn't running, so we should create a new one.
+
     @Override
     public Loader<java.util.List<Report>> onCreateLoader(int i, Bundle bundle) {
         //      Log for testing purposes
@@ -187,8 +184,7 @@ public class ReportActivity extends AppCompatActivity implements
         // buildUpon prepares the baseUri that we just parsed so we can add query params tot it.
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
-        // Append query params & value, Exemple: the format=json
-
+        // Append query params & value
         uriBuilder.appendQueryParameter("order-by", orderBy);
         uriBuilder.appendQueryParameter("q", "\"" + searchTags + "\"");
         uriBuilder.appendQueryParameter("show-references", "author");
@@ -208,6 +204,7 @@ public class ReportActivity extends AppCompatActivity implements
             reports) {
         //      Log for testing purposes
         //      android.util.Log.i(LOG_TAG, "Test: Report Activity onLoadFinished() called.");
+
         // Clear the adapter of previous report data
         mAdapter.clear();
 
@@ -232,7 +229,7 @@ public class ReportActivity extends AppCompatActivity implements
         }
     }
 
-    // The onLoaderReset() is needed for when the data from our loader is no langer valid and
+    // The onLoaderReset() is needed for when the data from our loader is no longer valid and
     // the adapters data set needs to be reset
     @Override
     public void onLoaderReset(Loader<java.util.List<Report>> loader) {

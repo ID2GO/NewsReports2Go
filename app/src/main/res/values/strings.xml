@@ -55,8 +55,8 @@
     <string name="settings_tags_default" translatable="false">economy</string>
 
     <!--Dummy TextView fillers in case there is nothing to show ia a report-->
-    <!--<string name="first_name_writer">author</string>-->
-    <!--<string name="last_name_writer">writer</string>-->
+    <string name="first_name_writer">John</string>
+    <string name="last_name_writer">Scribles</string>
     <string name="section_title">Section of the newspaper</string>
     <string name="article_title">Title of the article</string>
     <string name="date">Mar 6, 2010</string>

@@ -82,8 +82,7 @@ public final class QueryUtils {
                     // For a given report, extract the JSONObject associated with the
                     // key called "properties", which represents a list of all properties
                     // for that report.
-                    // JSONObject properties = currentReport.getJSONObject("firstName");
-
+                    // Exemple: JSONObject properties = currentReport.getJSONObject("firstName");
                     firstName = currentReport.getJSONArray("tags").getJSONObject(0).optString("firstName");
                     // JSONObject properties = currentReport.getJSONObject("lastName");
                     lastName = currentReport.getJSONArray("tags").getJSONObject(0).optString("lastName");
@@ -107,7 +106,6 @@ public final class QueryUtils {
                 // Create a new {@link Report} object with the articleTitle, articleSection, time,
                 // and url from the JSON response.
                 Report report = new Report(firstName, lastName, articleTitle, articleSection, time, url);
-//                Report report = new Report(articleTitle, articleSection, time, url);
 
                 // Add the new {@link Report} to the list of reports.
                 reports.add(report);
